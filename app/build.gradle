@@ -1,11 +1,13 @@
 apply plugin: 'com.android.application'
 
+def dbFlow_version = "4.0.3"
+
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.1"
     defaultConfig {
-        applicationId "uio.androidbootcamp.storagedatabaseusingdbflow"
-        minSdkVersion 21
+        applicationId "uio.androidbootcamp.storagedatabaseprojectwithdbflow"
+        minSdkVersion 22
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -21,10 +23,16 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:${dbFlow_version}"
+    compile "com.github.Raizlabs.DBFlow:dbflow-core:${dbFlow_version}"
+    compile "com.github.Raizlabs.DBFlow:dbflow:${dbFlow_version}"
+    compile 'com.android.support:recyclerview-v7:26.0.2'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+    compile 'com.jakewharton:butterknife:8.6.0'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.+'
+    compile 'com.android.support:appcompat-v7:26.0.2'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
 }
