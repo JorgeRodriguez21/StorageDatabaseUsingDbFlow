@@ -1,3 +1,16 @@
 <resources>
-    <string name="app_name">StorageDatabaseUsingDbFlow</string>
+    <string name="app_name">StorageDatabaseProjectWithDbFlow</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="name">Name</string>
+    <string name="username">Username</string>
+    <string name="age">Age</string>
+    <string name="password">Password</string>
+    <string name="field_can_not_be_empty">El campo no puede estar vacío</string>
+    <string name="password_requirement">La clave debe tener un número, una mayúscula, una minúscula, un caracter especial y al menos ocho caracteres</string>
+    <string name="sign_in_invite">or Sign in!</string>
+    <string name="sign_in">Sign in</string>
+    <string name="error_creating_user">Error al crear el usuario</string>
+    <string name="user_creation_successfull">Usuario creado con éxito</string>
+    <string name="failed_login">Usuario o password incorrectos</string>
+    <string name="successfull_login">Usuario logeado con exito</string>
 </resources>
