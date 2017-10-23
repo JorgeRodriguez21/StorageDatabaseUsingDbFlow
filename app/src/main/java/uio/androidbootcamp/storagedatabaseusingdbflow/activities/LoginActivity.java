@@ -10,10 +10,10 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import uio.androidbootcamp.storagedatabaseprojectwithdbflow.R;
-import uio.androidbootcamp.storagedatabaseprojectwithdbflow.handlers.RegisterUserHandler;
-import uio.androidbootcamp.storagedatabaseprojectwithdbflow.models.User;
-import uio.androidbootcamp.storagedatabaseprojectwithdbflow.services.UserDataBaseService;
+import uio.androidbootcamp.storagedatabaseusingdbflow.R;
+import uio.androidbootcamp.storagedatabaseusingdbflow.handlers.UsersHandler;
+import uio.androidbootcamp.storagedatabaseusingdbflow.models.User;
+import uio.androidbootcamp.storagedatabaseusingdbflow.repositories.UserDataBaseRepository;
 
 /**
  * Created by jrodri on 7/7/17.
@@ -30,17 +30,17 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.button_sign_in)
     protected Button signInButton;
 
-    private RegisterUserHandler registerUserHandler;
+    private UsersHandler usersHandler;
 
-    private UserDataBaseService userDataBaseService;
+    private UserDataBaseRepository userDataBaseRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        userDataBaseService = new UserDataBaseService();
-        registerUserHandler = new RegisterUserHandler(userDataBaseService);
+        userDataBaseRepository = new UserDataBaseRepository();
+        usersHandler = new UsersHandler(userDataBaseRepository);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         String username = userNameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
         User user = new User(username, password);
-        if (registerUserHandler.login(user)) {
+        if (usersHandler.login(user)) {
             Toast.makeText(this, R.string.successfull_login, Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, UsersActivity.class);
             startActivity(intent);

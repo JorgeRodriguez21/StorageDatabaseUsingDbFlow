@@ -14,10 +14,10 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import uio.androidbootcamp.storagedatabaseprojectwithdbflow.R;
-import uio.androidbootcamp.storagedatabaseprojectwithdbflow.handlers.RegisterUserHandler;
-import uio.androidbootcamp.storagedatabaseprojectwithdbflow.models.User;
-import uio.androidbootcamp.storagedatabaseprojectwithdbflow.services.UserDataBaseService;
+import uio.androidbootcamp.storagedatabaseusingdbflow.R;
+import uio.androidbootcamp.storagedatabaseusingdbflow.handlers.UsersHandler;
+import uio.androidbootcamp.storagedatabaseusingdbflow.models.User;
+import uio.androidbootcamp.storagedatabaseusingdbflow.repositories.UserDataBaseRepository;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,11 +39,11 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.button_sign_up)
     protected Button signUpButton;
 
-    private RegisterUserHandler registerUserHandler;
+    private UsersHandler usersHandler;
 
     private boolean isThereNotValidFields;
 
-    private UserDataBaseService userDataBaseService;
+    private UserDataBaseRepository userDataBaseRepository;
 
 
     @Override
@@ -51,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        userDataBaseService = new UserDataBaseService();
-        registerUserHandler = new RegisterUserHandler(userDataBaseService);
+        userDataBaseRepository = new UserDataBaseRepository();
+        usersHandler = new UsersHandler(userDataBaseRepository);
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void checkNonEmptyFields(EditText editText) {
-        if (registerUserHandler.checkEmptyString(editText.getText().toString())) {
+        if (usersHandler.checkEmptyString(editText.getText().toString())) {
             editText.setError(getString(R.string.field_can_not_be_empty));
             isThereNotValidFields = true;
         } else {
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void checkPasswordCorrectness(EditText editText) {
-        if (!registerUserHandler.checkValidPassword(editText.getText().toString())) {
+        if (!usersHandler.checkValidPassword(editText.getText().toString())) {
             editText.setError(getString(R.string.password_requirement));
             isThereNotValidFields = true;
         } else {
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         if (!isThereNotValidFields) {
             User user = new User(nameEditText.getText().toString(), usernameEditText.getText().toString(),
                     passwordEditText.getText().toString(), Integer.parseInt(ageEditText.getText().toString()));
-            boolean isUserSaved = registerUserHandler.saveInDatabase(user);
+            boolean isUserSaved = usersHandler.saveInDatabase(user);
             if(isUserSaved){
                 Toast.makeText(this, R.string.user_creation_successfull, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(this, UsersActivity.class);
